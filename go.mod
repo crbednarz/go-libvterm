@@ -1,4 +1,4 @@
-module github.com/mattn/go-libvterm
+module github.com/crbednarz/go-libvterm
 
 go 1.15
 
