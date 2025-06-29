@@ -36,6 +36,7 @@ _vterm_screen_set_callbacks(VTermScreen *screen, void *user) {
 }
 */
 import "C"
+
 import (
 	"errors"
 	"unsafe"
@@ -89,7 +90,6 @@ type Rect struct {
 
 func (rect *Rect) StartRow() int {
 	return int(rect.rect.start_row)
-
 }
 
 func (rect *Rect) EndRow() int {
@@ -140,6 +140,24 @@ func (sc *ScreenCell) Chars() []rune {
 
 func (sc *ScreenCell) Width() int {
 	return int(sc.cell.width)
+}
+
+func (sc *ScreenCell) RawFg() [4]uint8 {
+	var cell [4]uint8
+	cell[0] = sc.cell.fg[0]
+	cell[1] = sc.cell.fg[1]
+	cell[2] = sc.cell.fg[2]
+	cell[3] = sc.cell.fg[3]
+	return cell
+}
+
+func (sc *ScreenCell) RawBg() [4]uint8 {
+	var cell [4]uint8
+	cell[0] = sc.cell.bg[0]
+	cell[1] = sc.cell.bg[1]
+	cell[2] = sc.cell.bg[2]
+	cell[3] = sc.cell.bg[3]
+	return cell
 }
 
 type Attrs struct {
