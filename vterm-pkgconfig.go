@@ -8,6 +8,7 @@ package vterm
 #include <vterm.h>
 */
 import "C"
+
 import (
 	"image/color"
 )
@@ -36,4 +37,10 @@ func (s *State) SetDefaultColors(fg, bg color.RGBA) {
 
 func toCVtermColor(col color.RGBA) *C.VTermColor {
 	return &C.VTermColor{C.VTERM_COLOR_RGB, byte(col.R), byte(col.G), byte(col.B)}
+}
+
+func (s *State) GetCursorPos() Pos {
+	c_cursorPos := C.VTermPos{}
+	C.vterm_state_get_cursorpos(s.state, &c_cursorPos)
+	return Pos{c_cursorPos}
 }

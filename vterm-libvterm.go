@@ -62,6 +62,7 @@ func (c *VTermColor) GetIndex() (index uint8, ok bool) {
 		return 0, false
 	}
 }
+
 func (sc *ScreenCell) Fg() color.Color {
 	return color.RGBA{
 		R: uint8(sc.cell.fg[1]),
@@ -119,4 +120,10 @@ func (s *State) GetPaletteColor(index int) VTermColor {
 	c_color := C.VTermColor{}
 	C.vterm_state_get_palette_color(s.state, C.int(index), &c_color)
 	return VTermColor{c_color}
+}
+
+func (s *State) GetCursorPos() Pos {
+	c_cursorPos := C.VTermPos{}
+	C.vterm_state_get_cursorpos(s.state, &c_cursorPos)
+	return Pos{c_cursorPos}
 }
